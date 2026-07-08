@@ -1,0 +1,119 @@
+/* Project utilities that Tailwind does not provide semantically. */
+
+.container-grid {
+  width: 100%;
+  max-width: var(--grid-max);
+  margin-inline: auto;
+  padding-inline: var(--grid-gutter);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: var(--z-overlay);
+  padding: var(--space-2) var(--space-4);
+  background: var(--accent-active);
+  color: var(--background-primary);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  transform: translateY(-200%);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/* ---- cursor system (presentation only; logic in cursor-engine) ---- */
+.has-custom-cursor,
+.has-custom-cursor a,
+.has-custom-cursor button,
+.has-custom-cursor [data-cursor] {
+  cursor: none;
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-cursor);
+  pointer-events: none;
+  border-radius: var(--radius-full);
+  will-change: transform;
+}
+
+[data-cursor-root][data-enabled="false"] {
+  display: none;
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent-active);
+  transition: opacity var(--duration-instant) linear;
+}
+
+.cursor-ring {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid
+    color-mix(in oklab, var(--text-primary) 40%, transparent);
+  transition:
+    width var(--duration-fast) var(--ease-out),
+    height var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out);
+}
+
+.cursor-ring[data-variant="link"] {
+  width: 64px;
+  height: 64px;
+  border-color: var(--accent-active);
+}
+
+.cursor-ring[data-variant="drag"],
+.cursor-ring[data-variant="view"] {
+  width: 80px;
+  height: 80px;
+  background: color-mix(in oklab, var(--background-elevated) 70%, transparent);
+  border-color: var(--accent-active);
+  backdrop-filter: blur(4px);
+}
+
+.cursor-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+/* ---- globe ---- */
+.globe-canvas,
+.globe-placeholder {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-canvas);
+}
+
+/* ---- focus ---- */
+:focus-visible {
+  outline: 2px solid var(--accent-active);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}

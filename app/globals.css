@@ -1,0 +1,56 @@
+@import "tailwindcss";
+@import "../src/styles/tokens.css";
+@import "../src/styles/utilities.css";
+
+@theme inline {
+  --color-background-primary: var(--background-primary);
+  --color-background-elevated: var(--background-elevated);
+  --color-text-primary: var(--text-primary);
+  --color-text-muted: var(--text-muted);
+  --color-border-subtle: var(--border-subtle);
+  --color-accent-active: var(--accent-active);
+  --color-accent-interaction: var(--accent-interaction);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+html {
+  color-scheme: dark;
+  background: var(--background-primary);
+}
+
+body {
+  background: var(--background-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-base);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent-active);
+  color: var(--background-primary);
+}
+
+/* Lenis recommended styles (no-ops under reduced motion / no Lenis). */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

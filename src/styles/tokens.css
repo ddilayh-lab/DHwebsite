@@ -1,0 +1,89 @@
+/* =====================================================================
+   DESIGN TOKENS — source of truth for the DOM.
+   Components consume SEMANTIC tokens only; raw values live here.
+   (config/design-tokens.ts mirrors the GL-relevant subset.)
+   ===================================================================== */
+
+:root {
+  /* ---- raw palette (never used directly in components) ---- */
+  --raw-ink-0: #0a0a0b;
+  --raw-ink-1: #131316;
+  --raw-ink-2: #26262b;
+  --raw-paper-0: #f2f1ed;
+  --raw-paper-1: #8f8e88;
+  --raw-signal-0: #d8fb4e;
+  --raw-signal-1: #b7d63e;
+
+  /* ---- semantic color ---- */
+  --background-primary: var(--raw-ink-0);
+  --background-elevated: var(--raw-ink-1);
+  --text-primary: var(--raw-paper-0);
+  --text-muted: var(--raw-paper-1);
+  --border-subtle: var(--raw-ink-2);
+  --accent-active: var(--raw-signal-0);
+  --accent-interaction: var(--raw-signal-1);
+  --glow-primary: var(--raw-signal-0);
+
+  /* ---- typography ---- */
+  --font-display: "Inter Tight", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "JetBrains Mono", "SF Mono", monospace;
+
+  --text-xs: clamp(0.72rem, 0.7rem + 0.1vw, 0.78rem);
+  --text-sm: clamp(0.84rem, 0.8rem + 0.2vw, 0.95rem);
+  --text-base: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+  --text-lg: clamp(1.25rem, 1.1rem + 0.8vw, 1.75rem);
+  --text-xl: clamp(1.8rem, 1.4rem + 2vw, 3rem);
+  --text-display: clamp(2.8rem, 1.5rem + 7vw, 8rem);
+
+  --leading-tight: 1.05;
+  --leading-base: 1.6;
+  --tracking-wide: 0.14em;
+
+  /* ---- spacing (4px base scale) ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --space-section: clamp(6rem, 4rem + 12vh, 12rem);
+
+  /* ---- shape / depth ---- */
+  --radius-sm: 4px;
+  --radius-md: 10px;
+  --radius-lg: 20px;
+  --radius-full: 999px;
+  --blur-elevated: 16px;
+  --opacity-muted: 0.6;
+  --shadow-elevated: 0 20px 60px rgb(0 0 0 / 0.5);
+  --glow-soft: 0 0 40px color-mix(in oklab, var(--glow-primary) 25%, transparent);
+
+  /* ---- z-index layers (mirrors design-tokens.ts) ---- */
+  --z-canvas: 0;
+  --z-content: 10;
+  --z-navigation: 40;
+  --z-overlay: 50;
+  --z-cursor: 100;
+
+  /* ---- grid ---- */
+  --grid-max: 90rem;
+  --grid-gutter: clamp(1rem, 4vw, 3rem);
+
+  /* ---- motion (CSS consumers; JS reads config/motion.ts) ---- */
+  --duration-instant: 120ms;
+  --duration-fast: 250ms;
+  --duration-base: 600ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --text-muted: #c5c4be;
+    --border-subtle: #4a4a52;
+  }
+}
