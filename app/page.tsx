@@ -7,19 +7,17 @@ import { ContactSection } from "@/components/sections/ContactSection";
 
 /**
  * The experience is one continuous scroll timeline composed of
- * chapters. Everything renders from data; this file only declares
- * order. (The Connect chapter is realized by the globe + contact
- * surfaces rather than a card list.)
+ * chapters generated from the resume knowledge graph. Every chapter
+ * renders its cards as real HTML; the globe and contact surfaces then
+ * complete the Connect chapter as its visual and product instruments.
  */
 export default function Page() {
-  const narrativeChapters = chapters.filter((c) => c.id !== "connect");
-
   return (
     <>
       <ChapterNav />
       <main id="content">
         <Hero />
-        {narrativeChapters.map((chapter) => (
+        {chapters.map((chapter) => (
           <ChapterSection key={chapter.id} chapter={chapter} />
         ))}
         <GlobeSection />

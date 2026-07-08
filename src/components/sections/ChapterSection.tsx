@@ -40,6 +40,26 @@ export function ChapterSection({ chapter }: { chapter: Chapter }) {
         <p style={{ color: "var(--text-muted)", maxWidth: "36ch", marginTop: "var(--space-4)" }}>
           {chapter.narrative}
         </p>
+        {chapter.headlineMetric ? (
+          <p style={{ marginTop: "var(--space-8)" }}>
+            <span
+              className="font-display font-semibold block"
+              style={{ fontSize: "var(--text-xl)", color: "var(--accent-active)" }}
+            >
+              {chapter.headlineMetric.value}
+            </span>
+            <span
+              className="font-mono uppercase"
+              style={{
+                fontSize: "var(--text-xs)",
+                letterSpacing: "var(--tracking-wide)",
+                color: "var(--text-muted)",
+              }}
+            >
+              {chapter.headlineMetric.label}
+            </span>
+          </p>
+        ) : null}
       </Reveal>
 
       <Reveal cascade>

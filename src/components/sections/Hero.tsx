@@ -1,7 +1,10 @@
-import { profile } from "@/data";
+import { heroContent } from "@/data";
 import { Reveal } from "@/components/motion/Reveal";
 
-/** Server component: static content; motion applied via Reveal wrapper. */
+/**
+ * Server component. Renders compiled hero content: identity, editorial
+ * statement, and metric proof points straight from the graph.
+ */
 export function Hero() {
   return (
     <header
@@ -18,7 +21,7 @@ export function Hero() {
             color: "var(--accent-active)",
           }}
         >
-          {profile.domains.join(" · ")}
+          {heroContent.domains.join(" · ")}
         </p>
         <h1
           className="font-display font-semibold"
@@ -28,7 +31,7 @@ export function Hero() {
             maxWidth: "12ch",
           }}
         >
-          {profile.name}
+          {heroContent.name}
         </h1>
         <p
           style={{
@@ -38,8 +41,35 @@ export function Hero() {
             marginTop: "var(--space-6)",
           }}
         >
-          {profile.statement}
+          {heroContent.statement}
         </p>
+
+        <dl
+          className="flex flex-wrap gap-x-12 gap-y-4"
+          style={{ marginTop: "var(--space-12)" }}
+          aria-label="Proof points"
+        >
+          {heroContent.proofPoints.map((point) => (
+            <div key={point.label} className="flex flex-col">
+              <dt
+                className="order-2 font-mono uppercase"
+                style={{
+                  fontSize: "var(--text-xs)",
+                  letterSpacing: "var(--tracking-wide)",
+                  color: "var(--text-muted)",
+                }}
+              >
+                {point.label}
+              </dt>
+              <dd
+                className="order-1 font-display font-semibold"
+                style={{ fontSize: "var(--text-xl)", lineHeight: 1.1 }}
+              >
+                {point.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </Reveal>
     </header>
   );

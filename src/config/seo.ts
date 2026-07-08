@@ -1,32 +1,29 @@
 import type { Metadata, Viewport } from "next";
 import { site } from "./site";
-import { profile } from "@/data/profile";
+import { heroContent, seoContent } from "@/data";
 
-const description =
-  "Dilay Heybeli — an interactive portrait of leadership, engineering, " +
-  "artificial intelligence, finance and entrepreneurship, told through " +
-  "chapters rather than pages.";
-
+/** SEO ARCHITECTURE — metadata compiled from the knowledge graph. */
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — ${site.role}`,
+    default: seoContent.title,
     template: `%s — ${site.name}`,
   },
-  description,
+  description: seoContent.description,
+  keywords: seoContent.keywords,
   alternates: { canonical: "/" },
   openGraph: {
     type: "profile",
     url: site.url,
     siteName: site.name,
-    title: `${site.name} — ${site.role}`,
-    description,
+    title: seoContent.title,
+    description: seoContent.description,
     locale: site.locale,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — ${site.role}`,
-    description,
+    title: seoContent.title,
+    description: seoContent.description,
   },
   robots: { index: true, follow: true },
 };
@@ -42,9 +39,13 @@ export function personJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: site.name,
+    name: heroContent.name,
     url: site.url,
-    jobTitle: profile.headline,
-    knowsAbout: profile.domains,
+    description: seoContent.description,
+    knowsAbout: heroContent.domains,
+    affiliation: {
+      "@type": "CollegeOrUniversity",
+      name: "University of Illinois Chicago",
+    },
   };
 }
