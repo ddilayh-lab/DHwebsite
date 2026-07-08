@@ -5,6 +5,7 @@ import { useEffect, type ReactNode } from "react";
 import { scroll as scrollTokens } from "@/config/motion";
 import { ensureGsap } from "@/lib/animation";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { registerLenis } from "./scroll-api";
 import { scrollStore } from "./scroll-store";
 
 /**
@@ -42,6 +43,7 @@ export function ScrollProvider({ children }: { children: ReactNode }) {
       wheelMultiplier: scrollTokens.wheelMultiplier,
       touchMultiplier: scrollTokens.touchMultiplier,
     });
+    registerLenis(lenis);
 
     let scrollStopTimer: ReturnType<typeof setTimeout> | undefined;
 
@@ -66,6 +68,7 @@ export function ScrollProvider({ children }: { children: ReactNode }) {
     return () => {
       gsap.ticker.remove(tick);
       clearTimeout(scrollStopTimer);
+      registerLenis(null);
       lenis.destroy();
     };
   }, [reducedMotion]);

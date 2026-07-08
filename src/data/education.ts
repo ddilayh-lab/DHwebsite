@@ -24,7 +24,7 @@ export const education: ContentItem[] = [
     summary:
       "International programs that turned global thinking from an idea " +
       "into a habit.",
-    locationId: "berlin",
+    locationId: "cambridge",
     chapterId: "learn",
     priority: 4,
   },

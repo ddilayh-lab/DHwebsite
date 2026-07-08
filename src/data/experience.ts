@@ -32,7 +32,7 @@ export const experience: ContentItem[] = [
       "engineering realities into financial decisions.",
     metrics: ["6 engagements"],
     tags: ["Strategy", "Due diligence"],
-    locationId: "berlin",
+    locationId: "chicago",
     chapterId: "learn",
     priority: 2,
   },
@@ -46,7 +46,7 @@ export const experience: ContentItem[] = [
       "Worked at the meeting point of capital and technology — analysis, " +
       "models and conviction under uncertainty.",
     tags: ["Valuation", "Markets"],
-    locationId: "singapore",
+    locationId: "dubai",
     chapterId: "learn",
     priority: 3,
   },
@@ -76,7 +76,7 @@ export const leadership: ContentItem[] = [
     summary:
       "Serving on the board of a cross-border initiative connecting young " +
       "engineers with global mentors.",
-    locationId: "san-francisco",
+    locationId: "new-york",
     chapterId: "lead",
     priority: 2,
   },
@@ -92,8 +92,21 @@ export const conferences: ContentItem[] = [
     summary:
       "Represented emerging technology perspectives at international " +
       "summits and delegations.",
-    locationId: "singapore",
+    locationId: "seoul",
     chapterId: "connect",
     priority: 1,
+  },
+  {
+    id: "conf-forum",
+    title: "Delegate",
+    organization: "Placeholder Innovation Forum",
+    dateRange: { start: "2024" },
+    category: "community",
+    summary:
+      "Joined an international forum on technology and society, building " +
+      "a network that spans continents.",
+    locationId: "bali",
+    chapterId: "connect",
+    priority: 2,
   },
 ];

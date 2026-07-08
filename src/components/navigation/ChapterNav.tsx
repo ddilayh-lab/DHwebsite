@@ -2,10 +2,13 @@
 
 import { chapters } from "@/data/chapters";
 import { useScrollProgress } from "@/hooks/useScrollProgress";
+import { scrollToTarget } from "@/features/scroll/scroll-api";
 
 /**
  * Chapter navigation — subscribes only to the coarse `activeChapter`
- * value (renders on chapter change, not per frame).
+ * value (renders on chapter change, not per frame). Clicks go through
+ * the scroll API so navigation stays smooth under Lenis and native
+ * otherwise; the href fallback keeps keyboard/no-JS navigation intact.
  */
 export function ChapterNav() {
   const activeChapter = useScrollProgress((s) => s.activeChapter);
@@ -25,6 +28,10 @@ export function ChapterNav() {
                 href={`#chapter-${chapter.id}`}
                 data-cursor="link"
                 aria-current={active ? "true" : undefined}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToTarget(`#chapter-${chapter.id}`);
+                }}
                 className="font-mono uppercase transition-colors"
                 style={{
                   fontSize: "var(--text-xs)",

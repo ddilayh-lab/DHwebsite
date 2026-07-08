@@ -1,4 +1,5 @@
 import { globeNodes } from "@/data";
+import { ActiveNodeReadout } from "@/features/globe/ActiveNodeReadout";
 import { GlobeCanvas } from "@/features/globe/GlobeCanvas";
 import { Reveal } from "@/components/motion/Reveal";
 
@@ -35,6 +36,7 @@ export function GlobeSection() {
             Disciplines and places, connected. Every node below is real,
             navigable content — the globe is one lens on it.
           </p>
+          <ActiveNodeReadout />
         </Reveal>
 
         <Reveal cascade>

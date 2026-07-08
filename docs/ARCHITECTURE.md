@@ -35,9 +35,40 @@ The site is a platform of eight systems; pages emerge from them.
 - **Content is placeholder, structure is final** — every record in
   `src/data/*` is editable without touching layout or animation code.
 
-## Phase 2B surface (already stubbed)
+## Phase 2B — WebGL scene graph, physics, shaders
 
-Globe layers (arcs, custom shaders, environment), chapter visual
-treatments (`Chapter.treatment`), transition timelines on the FSM,
-self-hosted fonts, and the drag/inertia globe interaction on
-`globeStore.spinVelocity`.
+```
+SceneRoot (features/globe/Scene.tsx)
+├── FrameDirector      sole writer of shared frame uniforms (1×/frame)
+├── CameraRig          exclusive camera owner; damped targets only
+├── Environment        fog; BackgroundGradient is DOM (doubles as WebGL
+│                      fallback); HDRI deliberately omitted (emissive
+│                      scene — analytic lights are the art direction)
+├── LightingRig        key / rim / ambient / cursor-following accent
+├── GlobeSystem        core · surface · atmosphere · nodes · arcs ·
+│                      interaction targets (rotation physics lives here)
+├── ParticleSystem     one budgeted orbital system, all roles via uniforms
+├── PostProcessing     bloom + output, HIGH TIER ONLY; disposes targets
+└── DebugTools         dev-only ?debug stats
+```
+
+- **Physics:** `config/physics.ts` (springs, friction, limits, coupling)
+  + `lib/physics.ts` (`Spring`, `Inertia`). Drag → angular impulses →
+  friction decay → ambient spin blend. Overshoot globally clamped.
+- **Interaction manager** (`features/interaction`): one priority ladder
+  (reduced-motion → transitioning → dragging → focused → hover →
+  scrolling → idle); rigs branch on a single mode per frame.
+- **Shaders** (`features/globe/shaders/`): one file per responsibility
+  (surface, atmosphere, nodes, arcs, particles + shared noise); all
+  animation on the GPU from shared uniforms; depth cueing in-shader
+  instead of a depth pass; arcs are ONE LineSegments draw call.
+- **Camera/rotation separation:** the camera never orbits — yaw/pitch
+  live on the globe group, so drag physics and camera motion can't
+  fight over a property.
+- **Budgets:** tier-scaled particle counts (surface shell + 25% dust),
+  DPR caps, ~8 draw calls, bloom gated to high tier, `frameloop:
+  "demand"` under reduced motion.
+- **Error handling:** `lib/webgl.ts` detection → static gradient
+  fallback; the DOM node list is always the content.
+- Verified headless (Playwright + bundled Chromium): scene boots with
+  zero console errors; screenshot-reviewed framing.
