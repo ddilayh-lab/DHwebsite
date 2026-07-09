@@ -21,7 +21,6 @@ import { getParticleBudget } from "@/lib/performance";
 import { fibonacciSphere } from "@/lib/three-utils";
 import { scrollStore } from "@/features/scroll/scroll-store";
 import { focusEntity } from "@/features/experience/experience-store";
-import { transitionStore } from "@/features/transitions/transition-store";
 import { resolveInteractionMode } from "@/features/interaction/interaction-manager";
 import { buildArcs } from "../arcs";
 import { colorUniforms } from "../frame-uniforms";
@@ -83,18 +82,6 @@ export function GlobeSystem() {
     return map;
   }, [nodes]);
 
-  const chapterFirstNode = useMemo(() => {
-    const map = new Map<string, string>();
-    for (const node of nodes) {
-      for (const item of node.items) {
-        if (item.chapterId && !map.has(item.chapterId)) {
-          map.set(item.chapterId, node.location.id);
-        }
-      }
-    }
-    return map;
-  }, [nodes]);
-
   useFrame((_state, dt) => {
     const g = group.current;
     if (!g) return;
@@ -110,10 +97,7 @@ export function GlobeSystem() {
       r.yaw += yawInertia.velocity * dt;
       r.pitch += pitchInertia.velocity * dt;
     } else if (mode === "focused") {
-      const focusedId =
-        globeStore.get().activeNodeId ??
-        chapterFirstNode.get(transitionStore.get().focusedChapter ?? "") ??
-        null;
+      const focusedId = globeStore.get().activeNodeId;
       const target = focusedId ? nodeYawTargets.get(focusedId) : undefined;
       if (target) {
         // Shortest-path yaw approach (yaw accumulates unwrapped).

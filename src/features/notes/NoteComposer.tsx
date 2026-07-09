@@ -31,14 +31,7 @@ export function NoteComposer() {
       style={{ maxWidth: "36rem" }}
     >
       <label className="grid gap-2">
-        <span
-          className="font-mono uppercase"
-          style={{
-            fontSize: "var(--text-xs)",
-            letterSpacing: "var(--tracking-wide)",
-            color: "var(--text-muted)",
-          }}
-        >
+        <span className="u-label u-label-muted">
           Your email
         </span>
         <input
@@ -52,14 +45,7 @@ export function NoteComposer() {
       </label>
 
       <label className="grid gap-2">
-        <span
-          className="font-mono uppercase"
-          style={{
-            fontSize: "var(--text-xs)",
-            letterSpacing: "var(--tracking-wide)",
-            color: "var(--text-muted)",
-          }}
-        >
+        <span className="u-label u-label-muted">
           Note
         </span>
         <textarea
@@ -82,12 +68,20 @@ export function NoteComposer() {
           transitionDuration: "var(--duration-fast)",
         }}
       >
-        {state === "sending" ? "Opening…" : "Send note"}
+        {state === "sending" ? "Opening…" : state === "sent" ? "Draft opened" : "Send note"}
       </button>
 
-      <p role="status" aria-live="polite" className="sr-only">
-        {state === "sent" ? "Your email draft has been opened." : ""}
-        {state === "error" ? "Something went wrong — use the email link instead." : ""}
+      <p
+        role="status"
+        aria-live="polite"
+        className="u-label"
+        style={{
+          color: state === "error" ? "var(--text-primary)" : "var(--text-muted)",
+          minHeight: "1.5em",
+        }}
+      >
+        {state === "sent" ? "Your email draft is ready to send." : ""}
+        {state === "error" ? "Something went wrong — use the email link above instead." : ""}
       </p>
     </form>
   );

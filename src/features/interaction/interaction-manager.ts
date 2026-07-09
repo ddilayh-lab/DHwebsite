@@ -40,7 +40,7 @@ export function resolveInteractionMode(): InteractionMode {
 
   const globe = globeStore.get();
   if (globe.interaction === "dragging") return "dragging";
-  if (transitionStore.get().focusedChapter || globe.activeNodeId) return "focused";
+  if (globe.activeNodeId) return "focused";
   if (globe.interaction === "hover" || cursorStore.get().variant !== "default")
     return "hover";
   if (scrollStore.get().isScrolling) return "scrolling";

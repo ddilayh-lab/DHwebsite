@@ -1,6 +1,7 @@
 import { globeNodes } from "@/data";
 import { ActiveNodeReadout } from "@/features/globe/ActiveNodeReadout";
 import { GlobeCanvas } from "@/features/globe/GlobeCanvas";
+import { GlobeNodeList } from "@/features/globe/GlobeNodeList";
 import { Reveal } from "@/components/motion/Reveal";
 
 /**
@@ -39,28 +40,8 @@ export function GlobeSection() {
           <ActiveNodeReadout />
         </Reveal>
 
-        <Reveal cascade>
-          <ul className="mt-12 flex flex-wrap gap-x-8 gap-y-3" role="list">
-            {nodes.map(({ location, items }) => (
-              <li key={location.id}>
-                <a
-                  href={items[0]?.chapterId ? `#chapter-${items[0].chapterId}` : "#content"}
-                  data-cursor="link"
-                  className="font-mono uppercase"
-                  style={{
-                    fontSize: "var(--text-sm)",
-                    letterSpacing: "var(--tracking-wide)",
-                  }}
-                >
-                  {location.label}
-                  <span style={{ color: "var(--text-muted)" }}>
-                    {" "}
-                    · {items.length} {items.length === 1 ? "entry" : "entries"}
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
+        <Reveal>
+          <GlobeNodeList nodes={nodes} />
         </Reveal>
       </div>
     </section>

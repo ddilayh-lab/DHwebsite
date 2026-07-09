@@ -50,6 +50,9 @@ export class CursorEngine {
     window.addEventListener("pointermove", this.onMove, { passive: true });
     document.addEventListener("pointerover", this.onOver);
     document.addEventListener("pointerout", this.onOut);
+    // Re-read the target after clicks: toggles swap their label
+    // (open ⇄ close) without a pointerover firing.
+    document.addEventListener("click", this.onOver);
     gsap.ticker.add(this.tick);
     document.documentElement.classList.add("has-custom-cursor");
     cursorStore.set({ enabled: true });
@@ -62,6 +65,7 @@ export class CursorEngine {
     window.removeEventListener("pointermove", this.onMove);
     document.removeEventListener("pointerover", this.onOver);
     document.removeEventListener("pointerout", this.onOut);
+    document.removeEventListener("click", this.onOver);
     gsap.ticker.remove(this.tick);
     document.documentElement.classList.remove("has-custom-cursor");
     cursorStore.set({ enabled: false });

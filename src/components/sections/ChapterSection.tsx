@@ -20,14 +20,7 @@ export function ChapterSection({ chapter }: { chapter: Chapter }) {
       className="grid gap-12 lg:grid-cols-[1fr_2fr]"
     >
       <Reveal>
-        <p
-          className="font-mono uppercase"
-          style={{
-            fontSize: "var(--text-xs)",
-            letterSpacing: "var(--tracking-wide)",
-            color: "var(--accent-active)",
-          }}
-        >
+        <p className="u-label u-label-accent">
           {String(chapter.index).padStart(2, "0")} — {chapter.kicker}
         </p>
         <h2
@@ -48,14 +41,7 @@ export function ChapterSection({ chapter }: { chapter: Chapter }) {
             >
               {chapter.headlineMetric.value}
             </span>
-            <span
-              className="font-mono uppercase"
-              style={{
-                fontSize: "var(--text-xs)",
-                letterSpacing: "var(--tracking-wide)",
-                color: "var(--text-muted)",
-              }}
-            >
+            <span className="u-label u-label-muted">
               {chapter.headlineMetric.label}
             </span>
           </p>

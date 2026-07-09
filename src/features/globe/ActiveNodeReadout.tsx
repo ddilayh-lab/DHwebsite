@@ -24,13 +24,8 @@ export function ActiveNodeReadout() {
     <p
       role="status"
       aria-live="polite"
-      className="font-mono uppercase"
-      style={{
-        fontSize: "var(--text-sm)",
-        letterSpacing: "var(--tracking-wide)",
-        color: "var(--accent-active)",
-        minHeight: "1.5em",
-      }}
+      className="u-label u-label-accent"
+      style={{ fontSize: "var(--text-sm)", minHeight: "1.5em" }}
     >
       {node
         ? `${node.location.label}, ${node.location.country} — ${node.items.length} ${

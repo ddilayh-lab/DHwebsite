@@ -95,7 +95,7 @@ function FrameDirector({
   return null;
 }
 
-export default function GlobeScene() {
+export default function GlobeScene({ active = true }: { active?: boolean }) {
   const tier = useMemo(getDeviceTier, []);
   const [reducedMotion] = useState(prefersReducedMotion);
 
@@ -139,7 +139,9 @@ export default function GlobeScene() {
         alpha: true,
         toneMapping: ACESFilmicToneMapping,
       }}
-      frameloop={reducedMotion ? "demand" : "always"}
+      // Render only when needed: static single frames under reduced
+      // motion; nothing at all while the section is offscreen.
+      frameloop={reducedMotion ? "demand" : active ? "always" : "never"}
       aria-hidden="true"
     >
       <SceneContext.Provider value={sceneValue}>

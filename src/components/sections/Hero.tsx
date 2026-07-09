@@ -13,14 +13,7 @@ export function Hero() {
       style={{ zIndex: "var(--z-content)" }}
     >
       <Reveal cascade>
-        <p
-          className="font-mono uppercase"
-          style={{
-            fontSize: "var(--text-sm)",
-            letterSpacing: "var(--tracking-wide)",
-            color: "var(--accent-active)",
-          }}
-        >
+        <p className="u-label u-label-accent" style={{ fontSize: "var(--text-sm)" }}>
           {heroContent.domains.join(" · ")}
         </p>
         <h1
@@ -51,16 +44,7 @@ export function Hero() {
         >
           {heroContent.proofPoints.map((point) => (
             <div key={point.label} className="flex flex-col">
-              <dt
-                className="order-2 font-mono uppercase"
-                style={{
-                  fontSize: "var(--text-xs)",
-                  letterSpacing: "var(--tracking-wide)",
-                  color: "var(--text-muted)",
-                }}
-              >
-                {point.label}
-              </dt>
+              <dt className="order-2 u-label u-label-muted">{point.label}</dt>
               <dd
                 className="order-1 font-display font-semibold"
                 style={{ fontSize: "var(--text-xl)", lineHeight: 1.1 }}

@@ -48,7 +48,9 @@ export function ExperienceCard({ item }: { item: ContentItem }) {
       onPointerEnter={onEnter}
       onPointerLeave={onLeave}
     >
-      <h3 className="contents">
+      {/* display:contents on headings strips their role in some AT —
+          keep the h3 a real block box with the button filling it. */}
+      <h3>
         <button
           type="button"
           className="card-toggle"

@@ -1,6 +1,6 @@
 "use client";
 
-import { chapters } from "@/data/chapters";
+import { chapters } from "@/data";
 import { useScrollProgress } from "@/hooks/useScrollProgress";
 import { scrollToTarget } from "@/features/scroll/scroll-api";
 
@@ -32,10 +32,8 @@ export function ChapterNav() {
                   e.preventDefault();
                   scrollToTarget(`#chapter-${chapter.id}`);
                 }}
-                className="font-mono uppercase transition-colors"
+                className="u-label transition-colors"
                 style={{
-                  fontSize: "var(--text-xs)",
-                  letterSpacing: "var(--tracking-wide)",
                   color: active ? "var(--accent-active)" : "var(--text-muted)",
                   transitionDuration: "var(--duration-fast)",
                 }}

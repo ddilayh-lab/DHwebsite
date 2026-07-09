@@ -1,14 +1,14 @@
 import { createMachine } from "@/lib/state-machine";
 import { createStore } from "@/lib/store";
-import type { ChapterId } from "@/data/types";
 
 /**
  * TRANSITION STATE DOMAIN.
  *
  * Chapter/navigation transitions run through an explicit machine so an
  * interrupted transition resolves gracefully instead of fighting the
- * next one. The globe listens to `focusedChapter` through this layer —
- * navigation notifies the globe; the globe never owns navigation state.
+ * next one. The interaction manager gives "transitioning" priority
+ * over drag/hover/scroll, which is how transition timelines (when they
+ * run) suppress competing motion.
  */
 export type TransitionPhase = "idle" | "leaving" | "entering" | "interrupted";
 
@@ -26,20 +26,10 @@ export const transitionMachine = createMachine<TransitionPhase, TransitionEvent>
 
 export interface TransitionState {
   phase: TransitionPhase;
-  /** Chapter the experience is focused on (navigation intent). */
-  focusedChapter: ChapterId | null;
 }
 
-export const transitionStore = createStore<TransitionState>({
-  phase: "idle",
-  focusedChapter: null,
-});
+export const transitionStore = createStore<TransitionState>({ phase: "idle" });
 
 transitionMachine.onTransition((_from, to) => {
   transitionStore.set({ phase: to });
 });
-
-/** The controlled interaction layer: navigation → (store) → globe/UI. */
-export function focusChapter(chapter: ChapterId | null) {
-  transitionStore.set({ focusedChapter: chapter });
-}
