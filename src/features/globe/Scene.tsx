@@ -104,8 +104,9 @@ export default function GlobeScene() {
     [tier, reducedMotion],
   );
 
-  // Publish hover → active arc: the hovered node's chapter lights its
-  // arcs. Subscribed coarsely (store), applied to a uniform (no renders).
+  // Store → uniforms: the active node (set by globe raycast OR by DOM
+  // card hover — both views of the same data) lights its marker and
+  // its chapter arc. One writer, zero React renders.
   useEffect(() => {
     const nodes = positionedNodes();
     const defs = buildArcDefinitions(nodes);
@@ -113,8 +114,12 @@ export default function GlobeScene() {
       const id = globeStore.get().activeNodeId;
       if (!id) {
         sceneValue.uniforms.uActiveArc.value = -1;
+        sceneValue.uniforms.uHoverNode.value = -1;
         return;
       }
+      sceneValue.uniforms.uHoverNode.value = nodes.findIndex(
+        (n) => n.location.id === id,
+      );
       const def = defs.find((d) => d.fromId === id || d.toId === id);
       sceneValue.uniforms.uActiveArc.value = def?.index ?? -1;
     });

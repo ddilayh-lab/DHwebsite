@@ -1,4 +1,30 @@
-# Architecture — Phase 2A (Core Systems)
+# Architecture
+
+## Phase 3B — Experience engine (`src/features/experience`)
+
+- **experience-store** coordinates progressive disclosure (`expanded`),
+  graph traversal (`focusedEntityId`), context preservation
+  (`returnAnchor`), aria-live announcements, and the explorer.
+- **ExperienceCard**: the disclosure unit. Collapsed = title/org/date +
+  one metric chip (stage-one density); expanded = summary, metrics,
+  skills, place, and "Connected" graph links. Expansion is a CSS
+  grid-rows transition — interruptible by construction (the 0fr track
+  can't compress padding, so inner padding animates on the same curve).
+- **FocusController** executes traversals: smooth-scroll to the card,
+  expand, move keyboard focus to its toggle.
+- **ContextHud** (bottom-left): current chapter, "← Back to …" after a
+  jump, aria-live status. Answers where am I / what changed / how do I
+  return.
+- **ExplorerPanel** ("Index", top-right): four lenses — timeline,
+  places, themes, organizations — over the same canonical entities;
+  every entry resolves via focusEntity. Esc closes; focus returns.
+- **Globe ↔ UI sync**: card hover publishes its location to the globe
+  store (node + chapter arc light up, rig eases toward it); globe node
+  click focuses the node's strongest entity card. One store, two views.
+- Uniform writes consolidated: Scene's store subscription is the only
+  writer of uHoverNode/uActiveArc.
+
+# Phase 2A (Core Systems)
 
 The site is a platform of eight systems; pages emerge from them.
 

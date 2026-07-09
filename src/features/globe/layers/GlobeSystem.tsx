@@ -20,8 +20,8 @@ import { Inertia } from "@/lib/physics";
 import { getParticleBudget } from "@/lib/performance";
 import { fibonacciSphere } from "@/lib/three-utils";
 import { scrollStore } from "@/features/scroll/scroll-store";
-import { scrollToTarget } from "@/features/scroll/scroll-api";
-import { focusChapter, transitionStore } from "@/features/transitions/transition-store";
+import { focusEntity } from "@/features/experience/experience-store";
+import { transitionStore } from "@/features/transitions/transition-store";
 import { resolveInteractionMode } from "@/features/interaction/interaction-manager";
 import { buildArcs } from "../arcs";
 import { colorUniforms } from "../frame-uniforms";
@@ -339,7 +339,6 @@ function InteractionTargets({
   pitchInertia: Inertia;
   reducedMotion: boolean;
 }) {
-  const { uniforms } = useScene();
   const instanced = useRef<InstancedMesh>(null);
   const dragState = useRef({ dragging: false, lastX: 0, lastY: 0 });
 
@@ -354,8 +353,9 @@ function InteractionTargets({
     mesh.instanceMatrix.needsUpdate = true;
   }, [nodes]);
 
+  // Uniform writes happen in Scene's store subscription (one writer);
+  // interaction targets only publish state.
   const setHover = (index: number | null) => {
-    uniforms.uHoverNode.value = index ?? -1;
     globeStore.set({
       activeNodeId: index === null ? null : nodes[index].location.id,
       interaction: index === null ? "idle" : "hover",
@@ -363,20 +363,13 @@ function InteractionTargets({
     globeMachine.send(index === null ? "pointer-leave" : "pointer-enter");
   };
 
+  // Node click is GRAPH TRAVERSAL: focus the node's strongest entity
+  // card in the DOM — globe and UI are two views of the same data.
   const onNodeClick = (index: number) => {
     const node = nodes[index];
-    const chapterId = node.items[0]?.chapterId;
-    if (!chapterId) return;
-    focusChapter(chapterId);
-    scrollToTarget(`#chapter-${chapterId}`);
-    // Release focus once the scroll settles so the camera returns to
-    // scroll-driven behavior instead of staying locked forever.
-    const unsubscribe = scrollStore.subscribe(() => {
-      if (!scrollStore.get().isScrolling) {
-        focusChapter(null);
-        unsubscribe();
-      }
-    });
+    const item = node.items[0];
+    if (!item) return;
+    focusEntity(item.id, { reason: `From ${node.location.label} on the globe` });
   };
 
   // --- drag physics: pointer deltas → angular impulses ---

@@ -135,3 +135,288 @@
   outline-offset: 3px;
   border-radius: var(--radius-sm);
 }
+
+/* =====================================================================
+   EXPERIENCE ENGINE — cards, HUD, explorer.
+   All transitions are CSS (interruptible by construction); reduced
+   motion collapses them via the global media query in globals.css.
+   ===================================================================== */
+
+/* ---- experience card (progressive disclosure) ---- */
+.experience-card {
+  border-top: 1px solid var(--border-subtle);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+.experience-card[data-focused] {
+  background: color-mix(in oklab, var(--accent-active) 5%, transparent);
+}
+
+.card-toggle {
+  display: flex;
+  width: 100%;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-6);
+  text-align: left;
+}
+.card-toggle:hover .card-indicator,
+.card-toggle:focus-visible .card-indicator {
+  color: var(--accent-active);
+  transform: scale(1.2);
+}
+
+.card-heading {
+  flex: 1 1 24rem;
+  line-height: var(--leading-tight);
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-shrink: 0;
+}
+
+.card-date {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.card-chip {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  color: var(--accent-active);
+  border: 1px solid color-mix(in oklab, var(--accent-active) 35%, transparent);
+  border-radius: var(--radius-full);
+  padding: 2px 10px;
+  white-space: nowrap;
+}
+
+.card-indicator {
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+  display: inline-block;
+}
+.card-indicator[data-open="true"] {
+  transform: rotate(45deg);
+}
+
+/* Interruptible expansion: grid-rows transition reverses cleanly. */
+.card-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--duration-base) var(--ease-out);
+}
+.card-body[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+.card-body-inner {
+  overflow: hidden;
+  min-height: 0;
+  display: grid;
+  gap: var(--space-4);
+  /* Padding can't be compressed by the 0fr track — animate it with
+     the same curve so collapsed cards close completely flush. */
+  padding-bottom: 0;
+  transition: padding-bottom var(--duration-base) var(--ease-out);
+}
+.card-body[data-open="true"] .card-body-inner {
+  padding-bottom: var(--space-6);
+}
+
+.card-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.card-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.card-related-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--space-2);
+}
+.card-related ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-6);
+}
+.card-related button {
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+.card-related button:hover,
+.card-related button:focus-visible {
+  border-color: var(--accent-active);
+}
+
+/* Keep card content clear of the fixed chapter rail on wide screens. */
+@media (min-width: 768px) {
+  section[data-chapter] {
+    padding-right: calc(var(--grid-gutter) + 6rem);
+  }
+}
+
+/* ---- context HUD ---- */
+.context-hud {
+  position: fixed;
+  left: var(--grid-gutter);
+  bottom: var(--space-6);
+  z-index: var(--z-navigation);
+  display: grid;
+  gap: var(--space-2);
+  pointer-events: none;
+}
+.context-hud > * {
+  pointer-events: auto;
+}
+.hud-chapter {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  justify-self: start;
+  background: color-mix(in oklab, var(--background-primary) 75%, transparent);
+  backdrop-filter: blur(var(--blur-elevated));
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-4);
+}
+.hud-return {
+  justify-self: start;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--background-primary);
+  background: var(--accent-active);
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-4);
+}
+
+/* ---- explorer panel ---- */
+.explorer-trigger {
+  position: fixed;
+  top: var(--space-6);
+  right: var(--grid-gutter);
+  z-index: var(--z-navigation);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-4);
+  background: color-mix(in oklab, var(--background-primary) 70%, transparent);
+  backdrop-filter: blur(var(--blur-elevated));
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+.explorer-trigger:hover,
+.explorer-trigger:focus-visible {
+  border-color: var(--accent-active);
+}
+
+.explorer-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(26rem, 100vw);
+  z-index: var(--z-overlay);
+  background: color-mix(in oklab, var(--background-elevated) 92%, transparent);
+  backdrop-filter: blur(var(--blur-elevated));
+  border-left: 1px solid var(--border-subtle);
+  padding: var(--space-6);
+  overflow-y: auto;
+  display: grid;
+  gap: var(--space-6);
+  align-content: start;
+}
+
+.explorer-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.explorer-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+}
+
+.explorer-lenses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.explorer-lenses button {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  color: var(--text-muted);
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+.explorer-lenses button[aria-selected="true"] {
+  color: var(--background-primary);
+  background: var(--accent-active);
+  border-color: var(--accent-active);
+}
+
+.explorer-groups {
+  display: grid;
+  gap: var(--space-6);
+}
+.explorer-group-heading {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--space-2);
+}
+.explorer-groups li button {
+  display: grid;
+  width: 100%;
+  text-align: left;
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.explorer-groups li button:hover span:first-child,
+.explorer-groups li button:focus-visible span:first-child {
+  color: var(--accent-active);
+}
+.explorer-item-meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}

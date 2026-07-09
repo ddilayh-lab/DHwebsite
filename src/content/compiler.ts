@@ -12,6 +12,15 @@ import type { MetricEntity, ResumeEntity } from "./types";
  */
 
 // ------------------------------------------------------------ view models
+export interface RelatedRef {
+  id: string;
+  title: string;
+  organization?: string;
+  chapterId: ChapterId;
+  /** Why the graph links these two — shown as context on traversal. */
+  reason: string;
+}
+
 export interface CardContent {
   id: string;
   title: string;
@@ -22,8 +31,11 @@ export interface CardContent {
   metrics: string[];
   tags: string[];
   locationId?: string;
+  locationLabel?: string;
   chapterId: ChapterId;
   priority: number;
+  /** Graph-traversal targets (displayable edges only). */
+  related: RelatedRef[];
 }
 
 export interface CompiledChapter {
@@ -65,6 +77,24 @@ function formatMetric(m: MetricEntity): string {
   return `${m.value} ${m.label}`;
 }
 
+function relatedRefs(e: ResumeEntity): RelatedRef[] {
+  const refs: RelatedRef[] = [];
+  for (const edge of graph.edgesOf(e.id)) {
+    if (!edge.displayable) continue;
+    const otherId = edge.fromEntity === e.id ? edge.toEntity : edge.fromEntity;
+    const other = graph.entity(otherId);
+    if (!other || other.type === "person") continue;
+    refs.push({
+      id: other.id,
+      title: other.title,
+      organization: graph.organizationName(other.organizationId),
+      chapterId: chapterForId(other.id),
+      reason: edge.reason,
+    });
+  }
+  return refs;
+}
+
 function toCard(e: ResumeEntity, chapterId: ChapterId): CardContent {
   return {
     id: e.id,
@@ -81,8 +111,12 @@ function toCard(e: ResumeEntity, chapterId: ChapterId): CardContent {
     metrics: graph.metricsOf(e.id).slice(0, 3).map(formatMetric),
     tags: e.skills.slice(0, 4),
     locationId: e.locationId,
+    locationLabel: e.locationId
+      ? `${graph.location(e.locationId)?.label}, ${graph.location(e.locationId)?.country}`
+      : undefined,
     chapterId,
     priority: e.priority,
+    related: relatedRefs(e),
   };
 }
 

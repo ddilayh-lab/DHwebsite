@@ -16,6 +16,14 @@ export interface Chapter {
   headlineMetric?: { value: string; label: string };
 }
 
+export interface RelatedRef {
+  id: string;
+  title: string;
+  organization?: string;
+  chapterId: ChapterId;
+  reason: string;
+}
+
 export interface ContentItem {
   id: string;
   title: string;
@@ -26,8 +34,10 @@ export interface ContentItem {
   metrics: string[];
   tags: string[];
   locationId?: string;
+  locationLabel?: string;
   chapterId: ChapterId;
   priority: number;
+  related: RelatedRef[];
 }
 
 export interface Location {

@@ -1,7 +1,7 @@
 import { itemsForChapter, type Chapter } from "@/data";
 import { Section } from "@/components/layout/Section";
 import { Reveal } from "@/components/motion/Reveal";
-import { ContentCard } from "@/components/content/ContentCard";
+import { ExperienceCard } from "@/components/content/ExperienceCard";
 
 /**
  * Server component: a chapter rendered entirely from data.
@@ -64,7 +64,7 @@ export function ChapterSection({ chapter }: { chapter: Chapter }) {
 
       <Reveal cascade>
         {items.map((item) => (
-          <ContentCard key={item.id} item={item} />
+          <ExperienceCard key={item.id} item={item} />
         ))}
       </Reveal>
     </Section>

@@ -24,6 +24,9 @@ const seedEdges: Array<
   ["proj-leaf", "lead-pmt", "supports", 0.5, "Women-in-finance mission aligns with investment-org leadership", true],
   ["edu-cambridge", "exp-flowcode", "shares_theme", 0.5, "AI runs through both the study and the partnerships work", true],
   ["conf-osqf", "lead-pmt", "shares_theme", 0.6, "Quantitative finance links the conference and the investment org", true],
+  ["lead-flamesforce", "lead-usg", "connected_with", 0.6, "Campus leadership: student government and athletics engagement", true],
+  ["exp-mytrip", "exp-almak", "shares_theme", 0.5, "Back-to-back global operations work in Istanbul and Dubai", true],
+  ["proj-leaf", "proj-teaching", "shares_theme", 0.5, "Community impact through education and access", true],
 ];
 
 function derivedEdges(): Relationship[] {
