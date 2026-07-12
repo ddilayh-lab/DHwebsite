@@ -26,3 +26,7 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# single-file preview packaging
+/dist-single
+/out
