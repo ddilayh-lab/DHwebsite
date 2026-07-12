@@ -17,15 +17,6 @@ export const metrics: MetricEntity[] = [
     displayPriority: 1,
   },
   {
-    id: "m-budget",
-    value: "$140,000",
-    label: "budget directed",
-    context: "Operations, events and initiatives across student government.",
-    sourceEntityId: "lead-usg",
-    confidence: "explicit",
-    displayPriority: 2,
-  },
-  {
     id: "m-orgs",
     value: "460+",
     label: "organizations engaged",

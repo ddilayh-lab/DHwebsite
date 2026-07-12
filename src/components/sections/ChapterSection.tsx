@@ -30,9 +30,6 @@ export function ChapterSection({ chapter }: { chapter: Chapter }) {
         >
           {chapter.title}
         </h2>
-        <p style={{ color: "var(--text-muted)", maxWidth: "36ch", marginTop: "var(--space-4)" }}>
-          {chapter.narrative}
-        </p>
         {chapter.headlineMetric ? (
           <p style={{ marginTop: "var(--space-8)" }}>
             <span

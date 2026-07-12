@@ -45,11 +45,11 @@ export const entities: ResumeEntity[] = [
     locationId: "chicago",
     status: "current",
     summary:
-      "Engineering management student and Student Body Vice President at " +
-      "UIC, with professional experience across four countries — working " +
-      "where AI, finance, partnerships and leadership meet.",
+      "Engineering Management student at the University of Illinois " +
+      "Chicago and Student Body Vice President, with professional " +
+      "experience across the United States, Indonesia, the UAE and Türkiye.",
     sourceRef: "edu.uic",
-    metricIds: ["m-students", "m-budget", "m-countries", "m-orgs"],
+    metricIds: ["m-students", "m-orgs", "m-countries", "m-boards"],
     skills: [],
     themes: ["leadership", "engineering", "ai", "finance", "globalExecution"],
     priority: 1,
@@ -228,12 +228,12 @@ export const entities: ResumeEntity[] = [
     startDate: "2024-05",
     status: "current",
     summary:
-      "Reelected by the campus to represent 36,000+ students — directing " +
-      "a $140,000 budget, leading engagement across 460+ organizations, " +
-      "and shaping policy for a community of 50,000+.",
+      "Reelected by the campus to represent 36,000+ students, leading " +
+      "engagement across 460+ organizations and student government " +
+      "operations, events and initiatives.",
     sourceRef: "lead.usg",
-    metricIds: ["m-students", "m-budget", "m-orgs", "m-policy", "m-members"],
-    skills: ["governance", "budget management", "public representation"],
+    metricIds: ["m-students", "m-orgs", "m-policy", "m-members"],
+    skills: ["governance", "policy", "public representation"],
     themes: ["leadership", "governance", "publicSpeaking"],
     priority: 1,
     displayWeight: 1,

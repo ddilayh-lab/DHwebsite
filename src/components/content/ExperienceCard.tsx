@@ -89,10 +89,9 @@ export function ExperienceCard({ item }: { item: ContentItem }) {
         </button>
       </h3>
 
+      {/* Expanded body is facts only — no descriptive copy. */}
       <div className="card-body" data-open={open} id={`card-body-${item.id}`}>
         <div className="card-body-inner">
-          <p style={{ color: "var(--text-muted)", maxWidth: "56ch" }}>{item.summary}</p>
-
           {item.metrics.length > 1 && (
             <ul className="card-metrics" role="list">
               {item.metrics.slice(1).map((metric) => (

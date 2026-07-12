@@ -22,11 +22,8 @@ export function ContactSection() {
           className="font-display font-semibold"
           style={{ fontSize: "var(--text-xl)", lineHeight: "var(--leading-tight)" }}
         >
-          Leave a note
+          Connect
         </h2>
-        <p style={{ color: "var(--text-muted)", maxWidth: "36ch", marginTop: "var(--space-4)" }}>
-          The fastest way to reach me — or use a channel directly.
-        </p>
         <ul className="mt-8 flex flex-wrap gap-4" role="list">
           {contactChannels.map((channel) => (
             <li key={channel.id}>

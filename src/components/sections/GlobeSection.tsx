@@ -31,12 +31,8 @@ export function GlobeSection() {
             className="font-display font-semibold"
             style={{ fontSize: "var(--text-xl)", lineHeight: "var(--leading-tight)" }}
           >
-            A network, not a map
+            Global experience
           </h2>
-          <p style={{ color: "var(--text-muted)", maxWidth: "44ch", marginTop: "var(--space-4)" }}>
-            Disciplines and places, connected. Every node below is real,
-            navigable content — the globe is one lens on it.
-          </p>
           <ActiveNodeReadout />
         </Reveal>
 

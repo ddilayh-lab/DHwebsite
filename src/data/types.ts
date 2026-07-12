@@ -30,7 +30,6 @@ export interface ContentItem {
   organization?: string;
   dateRange?: { start: string; end?: string };
   category: string;
-  summary: string;
   metrics: string[];
   tags: string[];
   locationId?: string;

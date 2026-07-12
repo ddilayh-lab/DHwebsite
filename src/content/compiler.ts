@@ -27,7 +27,6 @@ export interface CardContent {
   organization?: string;
   dateRange?: { start: string; end?: string };
   category: string;
-  summary: string;
   metrics: string[];
   tags: string[];
   locationId?: string;
@@ -107,7 +106,6 @@ function toCard(e: ResumeEntity, chapterId: ChapterId): CardContent {
         }
       : undefined,
     category: e.themes[0],
-    summary: e.summary,
     metrics: graph.metricsOf(e.id).slice(0, 3).map(formatMetric),
     tags: e.skills.slice(0, 4),
     locationId: e.locationId,
